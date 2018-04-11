@@ -26,8 +26,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <br/>
 	<form action="./LoginServlet" method="post" style="text-align:center;">
-	  用户名: <input type="text" name="fname"><br/><br/>
-	  密&nbsp&nbsp&nbsp&nbsp码: <input type="text" name="lname"><br/><br/>
+	  用户名: <input type="text" name="username"><br/><br/>
+	  密&nbsp&nbsp&nbsp&nbsp码: <input type="text" name="password"><br/><br/>
 	  <input style="width:80px" type="submit" value="登录">
 	</form>
   </body>

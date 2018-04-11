@@ -8,26 +8,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.ihsuzi.bean.User;
+import cn.ihsuzi.dao.UserDao;
+
 public class LoginServlet extends HttpServlet
 {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-
-		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=utf-8");
+		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		User user = new User(username,password);
+		
 		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-		out.println("<HTML>");
-		out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-		out.println("  <BODY>");
-		out.print("    This is ");
-		out.print(this.getClass());
-		out.println(", using the GET method");
-		out.println("  </BODY>");
-		out.println("</HTML>");
-		out.flush();
-		out.close();
+		
+		// 校验用户名密码是否正确
+		try
+		{
+			if (UserDao.isExist(user))
+			{
+				// 校验正确，跳转到主页
+				response.setHeader("refresh", "0;url=./index.jsp");
+			}else {
+				// 校验失败，提示用户名或密码错误
+				out.write("<script>window.alert('用户名或密码错误');</script>");
+				response.setHeader("refresh", "0;url=./login.jsp");
+			}
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 
