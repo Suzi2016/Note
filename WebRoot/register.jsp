@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   <h3 style="padding-left:200px;padding-top:30px">欢迎加入</h3>
     <br/>
-	<form action="./RegisterServlet" method="post" style="padding-left:230px">
+	<form action="${pageContext.request.contextPath}/Register" method="post" style="padding-left:230px">
 	    用户名:&nbsp<input type="text" name="username">
 	  <p></p>
 

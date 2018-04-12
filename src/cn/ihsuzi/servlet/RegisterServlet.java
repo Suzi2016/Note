@@ -23,9 +23,17 @@ public class RegisterServlet extends HttpServlet
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/heml;charset=UTF-8");
 		
+		//TODO 做一个空值验证以及错误处理
+
 		// 获取从浏览器传过来的注册信息
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+
+		// Test 解决数据库存储乱码的问题，打印从浏览器获取的用户名和密码，查看是否是乱码
+		System.out.println("username:"+username);
+		System.out.println("password:"+password);
+
+
 		
 		boolean isValid = true;
 		
