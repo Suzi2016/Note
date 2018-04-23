@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 默认的 servlet，当发生错误（访问不存在的 servlet）的时候访问此 servlet
  */
-public class RegisterServlet extends HttpServlet
+public class ErrorServlet extends HttpServlet
 {
-
-
+//TODO 还需要配置 web.xml
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
@@ -23,7 +23,7 @@ public class RegisterServlet extends HttpServlet
 		response.setContentType("text/heml;charset=UTF-8");
 		
 
-		PrinterWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		out.write("出现错误了....");
 		
 		out.flush();

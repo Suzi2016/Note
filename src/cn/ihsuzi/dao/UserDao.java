@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import cn.ihsuzi.bean.User;
+import cn.ihsuzi.data.ConstantValues;
 
 public class UserDao
 {
@@ -19,8 +20,8 @@ public class UserDao
 		//要链接数据库的url
 		String url = "jdbc:mysql://localhost:3306/Note";
 		//链接数据库的用户名和密码
-		String username = "root";
-		String password = "root";
+		String username = ConstantValues.DB_USERNAME;
+		String password = ConstantValues.DB_PASSWORD;
 
 		// 1.加载驱动
 		Class.forName("com.mysql.jdbc.Driver");
@@ -56,8 +57,8 @@ public class UserDao
 		//要链接数据库的url
 		String url = "jdbc:mysql://localhost:3306/Note";
 		//链接数据库的用户名和密码
-		String username = "root";
-		String password = "root";
+		String username = ConstantValues.DB_USERNAME;
+		String password = ConstantValues.DB_PASSWORD;
 
 		// 1.加载驱动
 		Class.forName("com.mysql.jdbc.Driver");
@@ -104,8 +105,8 @@ public class UserDao
 		//要链接数据库的url
 		String url = "jdbc:mysql://localhost:3306/Note";
 		//链接数据库的用户名和密码
-		String username = "root";
-		String password = "root";
+		String username = ConstantValues.DB_USERNAME;
+		String password = ConstantValues.DB_PASSWORD;
 
 		// 1.加载驱动
 		Class.forName("com.mysql.jdbc.Driver");
