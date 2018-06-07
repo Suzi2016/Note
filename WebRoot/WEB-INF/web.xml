@@ -21,6 +21,13 @@
     <servlet-name>ErrorServlet</servlet-name>
     <servlet-class>cn.ihsuzi.servlet.ErrorServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>PrivateUIServlet</servlet-name>
+    <servlet-class>cn.ihhsuzi.servlet.ui.PrivateUIServlet</servlet-class>
+  </servlet>
+
 
 
   <servlet-mapping>
@@ -34,6 +41,10 @@
   <servlet-mapping>
     <servlet-name>ErrorServlet</servlet-name>
     <url-pattern>/Error</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PrivateUIServlet</servlet-name>
+    <url-pattern>/private</url-pattern>
   </servlet-mapping>
 
 </web-app>

@@ -8,5 +8,5 @@ public class ConstantValues
 	
 	// 数据库相关
 	public final static String DB_USERNAME = "root";
-	public final static String DB_PASSWORD = "@&tcscBSTL4510_#";
+	public final static String DB_PASSWORD = "root";
 }

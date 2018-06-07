@@ -19,40 +19,50 @@ public class LoginServlet extends HttpServlet
 	{
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
-		
+
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
 		User user = new User(username,password);
-		
-		PrintWriter out = response.getWriter();
 		
 		// 校验用户名密码是否正确
 		try
 		{
 			if (UserDao.isExist(user))
 			{
-				// 校验正确，跳转到主页
-				response.setHeader("refresh", "0;url=./index.jsp");
+				// 校验正确，设置 sesseion，跳转到主页
+				request.getSession().setAttribute("username", user.getUsername());
+				response.sendRedirect(request.getContextPath()+"/private");
+				return;
 			}else {
 				// 校验失败，提示用户名或密码错误
-				out.write("<script>window.alert('用户名或密码错误');</script>");
-				response.setHeader("refresh", "0;url=./login.jsp");
+				request.setAttribute("error_info", "用户名或密码错误");
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
+				return;
 			}
 		} catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 
+	
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-
 		doGet(request, response);
 	}
 
 }
+
+
+
+
+
+
+
+
+
