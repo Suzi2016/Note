@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     
     <br/>
-	<form action="${pageContext.request.contextPath}/Login" method="post" style="text-align:center;">
+	<form action="${pageContext.request.contextPath}/login/verify" method="post" style="text-align:center;">
 	      用户名: 
 	  <input type="text" name="username" required="required"><br/><br/>
 	      密&nbsp&nbsp&nbsp&nbsp码: 

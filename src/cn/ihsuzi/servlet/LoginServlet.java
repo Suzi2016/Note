@@ -1,7 +1,6 @@
 package cn.ihsuzi.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +36,7 @@ public class LoginServlet extends HttpServlet
 			}else {
 				// 校验失败，提示用户名或密码错误
 				request.setAttribute("error_info", "用户名或密码错误");
-				request.getRequestDispatcher("/login.jsp").forward(request, response);
+				request.getRequestDispatcher("/login").forward(request, response);
 				return;
 			}
 		} catch (Exception e)
