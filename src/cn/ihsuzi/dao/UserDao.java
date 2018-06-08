@@ -10,12 +10,28 @@ import cn.ihsuzi.data.ConstantValues;
 
 public class UserDao
 {
+	private UserDao(){}
+	
+	/*
+	 * 使用单例模式获取 UserDao 对象，从而保证同时只有一个用户去操作数据库中的数据
+	 */
+	private static UserDao userDao = null;
+	
+	public static UserDao getUserDao()
+	{
+		if (userDao == null)
+		{
+			userDao = new UserDao();
+		}
+		return userDao;
+	}
+	
 	/**
 	 * 插入一条数据
 	 * @param user
 	 * @throws Exception
 	 */
-	public static void insertUser(User user) throws Exception
+	public void insertUser(User user) throws Exception
 	{
 		//要链接数据库的url
 		String url = "jdbc:mysql://localhost:3306/Note";
@@ -52,7 +68,7 @@ public class UserDao
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean isExist(User user) throws Exception
+	public boolean isExist(User user) throws Exception
 	{
 		//要链接数据库的url
 		String url = "jdbc:mysql://localhost:3306/Note";
@@ -100,7 +116,7 @@ public class UserDao
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean isUsernameExist(User user) throws Exception
+	public boolean isUsernameExist(User user) throws Exception
 	{
 		//要链接数据库的url
 		String url = "jdbc:mysql://localhost:3306/Note";
@@ -140,6 +156,9 @@ public class UserDao
 		
 		return haveData;
 	}
+	
+	
+	
 	
 }
 

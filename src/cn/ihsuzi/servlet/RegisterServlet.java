@@ -53,12 +53,12 @@ public class RegisterServlet extends HttpServlet
 			try
 			{
 				// 判断用户名是否已经注册了
-				if (UserDao.isUsernameExist(user))
+				if (UserDao.getUserDao().isUsernameExist(user))
 				{
 					out.write("用户名已被注册，请重试");
 					response.setHeader("refresh", "2;url=./register.jsp");
 				}else {
-					UserDao.insertUser(user);
+					UserDao.getUserDao().insertUser(user);
 					out.write("注册成功，3秒后跳转到登录界面");
 					response.setHeader("refresh", "3;url=./login.jsp");
 				}
@@ -76,10 +76,7 @@ public class RegisterServlet extends HttpServlet
 		
 		out.flush();
 		out.close();
-		
-		
-		
-		
+			
 	}
 
 

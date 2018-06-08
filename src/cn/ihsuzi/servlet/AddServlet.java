@@ -31,30 +31,54 @@ public class AddServlet extends HttpServlet
 		String title = request.getParameter("title");
 		if (title == null || StringUtil.isEmpty(title))
 		{
-			// TODO 增加 try-cache，此处可能会报错
-			request.setAttribute("title_warning", "标题不能为空");
-			request.getRequestDispatcher("/add").forward(request, response);
-			return;
+			// 如果浏览器长时间没操作再次直接刷新可能会报错：cant forword after response is commited
+			try
+			{
+				request.setAttribute("title_warning", "标题不能为空");
+				request.getRequestDispatcher("/add").forward(request, response);
+				return;
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
+			
 		}
 		String description = request.getParameter("description");
 		if (description == null || StringUtil.isEmpty(description))
 		{
-			// TODO 增加 try-cache，此处可能会报错
-			request.setAttribute("description_warning", "简介不能为空");
-			request.getRequestDispatcher("/add").forward(request, response);
-			return;
+			try
+			{
+				request.setAttribute("description_warning", "简介不能为空");
+				request.getRequestDispatcher("/add").forward(request, response);
+				return;
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
 		}
 		String content = request.getParameter("content");
 		if (content == null || StringUtil.isEmpty(content))
 		{
-			// TODO 增加 try-cache，此处可能会报错
-			request.setAttribute("content_warning", "不能为空");
-			request.getRequestDispatcher("/add").forward(request, response);
-			return;
+			try
+			{
+				request.setAttribute("content_warning", "不能为空");
+				request.getRequestDispatcher("/add").forward(request, response);
+				return;
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
 		}
 		
 		// 将记录添加到数据库，提示用户，返回首页
-        
+		String username = (String) request.getSession().getAttribute("username");
+        int user_id = 1;
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
