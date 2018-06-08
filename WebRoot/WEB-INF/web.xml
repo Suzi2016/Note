@@ -25,19 +25,19 @@
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>PrivateUIServlet</servlet-name>
-    <servlet-class>cn.ihhsuzi.servlet.ui.PrivateUIServlet</servlet-class>
+    <servlet-class>cn.ihsuzi.servlet.ui.PrivateUIServlet</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>LoginUIServlet</servlet-name>
-    <servlet-class>cn.ihhsuzi.servlet.ui.LoginUIServlet</servlet-class>
+    <servlet-class>cn.ihsuzi.servlet.ui.LoginUIServlet</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>AddUIServlet</servlet-name>
-    <servlet-class>cn.ihhsuzi.servlet.ui.AddUIServlet</servlet-class>
+    <servlet-class>cn.ihsuzi.servlet.ui.AddUIServlet</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>

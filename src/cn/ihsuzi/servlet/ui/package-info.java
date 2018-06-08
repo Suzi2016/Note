@@ -5,4 +5,4 @@
  * @author Suzi
  *
  */
-package cn.ihhsuzi.servlet.ui;
+package cn.ihsuzi.servlet.ui;

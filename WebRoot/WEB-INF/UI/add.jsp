@@ -50,6 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <td>
                           <input type="text" name="description" required="required"/>
                       </td>
+                      <td><small style="text-color:red;">${description_warning}</small></td>
                   </tr>
                   
                   <tr>
@@ -57,6 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <td>
                           <input type="text" name="content" required="required"/>
                       </td>
+                      <td><small style="text-color:red;">${content_warning}</small></td>
                   </tr>
                   
                   <tr>

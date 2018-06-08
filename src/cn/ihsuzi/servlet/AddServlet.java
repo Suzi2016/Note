@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.ihsuzi.dao.UserDao;
 import cn.ihsuzi.util.StringUtil;
 
 public class AddServlet extends HttpServlet
@@ -78,7 +79,17 @@ public class AddServlet extends HttpServlet
 		
 		// 将记录添加到数据库，提示用户，返回首页
 		String username = (String) request.getSession().getAttribute("username");
-        int user_id = 1;
+		int user_id = 0;
+        try
+		{
+			user_id = UserDao.getUserId(username);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+        System.out.println("userid:"+user_id);
+        
+        // TODO 将添加的密码信息保存到数据库中
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -34,7 +34,8 @@ public class DBUtil
 	
 	private void init() throws Exception
 	{	
-		Properties properties = PropertiesUtil.loadProperties("jdbc.properties");
+		String filename = "cn/ihsuzi/config/jdbc.properties";
+		Properties properties = PropertiesUtil.loadProperties(filename);
 		String db_name = properties.getProperty("name");
 		String db_password = properties.getProperty("password");
 		String url = properties.getProperty("url");
@@ -49,17 +50,20 @@ public class DBUtil
 		statement = connection.createStatement();
 	}
 	
-	public void Close()
+	public static void close()
 	{
 		try
 		{
-			if (this.statement != null)
+			if (dbUtil != null)
 			{
-				this.connection.close();
-			}
-			if (this.connection != null)
-			{
-				this.connection.close();
+				if (dbUtil.statement != null)
+				{
+					dbUtil.connection.close();
+				}
+				if (dbUtil.connection != null)
+				{
+					dbUtil.connection.close();
+				}
 			}
 			
 		} catch (SQLException e)

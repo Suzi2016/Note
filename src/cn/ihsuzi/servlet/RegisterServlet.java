@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.ihsuzi.bean.User;
 import cn.ihsuzi.dao.UserDao;
-import cn.ihsuzi.data.ConstantValues;
 
 public class RegisterServlet extends HttpServlet
 {
@@ -34,7 +33,6 @@ public class RegisterServlet extends HttpServlet
 		System.out.println("password:"+password);
 
 
-		
 		boolean isValid = true;
 		
 		// 判断信息是否已经注册了
@@ -53,12 +51,12 @@ public class RegisterServlet extends HttpServlet
 			try
 			{
 				// 判断用户名是否已经注册了
-				if (UserDao.getUserDao().isUsernameExist(user))
+				if (UserDao.isUsernameExist(user))
 				{
 					out.write("用户名已被注册，请重试");
 					response.setHeader("refresh", "2;url=./register.jsp");
 				}else {
-					UserDao.getUserDao().insertUser(user);
+					UserDao.insertUser(user);
 					out.write("注册成功，3秒后跳转到登录界面");
 					response.setHeader("refresh", "3;url=./login.jsp");
 				}

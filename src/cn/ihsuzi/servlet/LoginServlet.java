@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet
 		// 校验用户名密码是否正确
 		try
 		{
-			if (UserDao.getUserDao().isExist(user))
+			if (UserDao.isExist(user))
 			{
 				// 校验正确，设置 sesseion，跳转到主页
 				request.getSession().setAttribute("username", user.getUsername());
