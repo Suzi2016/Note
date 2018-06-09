@@ -46,11 +46,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>
                   
                   <tr>
-                      <td>简介</td>
+                      <td>账号</td>
                       <td>
-                          <input type="text" name="description" required="required"/>
+                          <input type="text" name="account" required="required"/>
                       </td>
-                      <td><small style="text-color:red;">${description_warning}</small></td>
+                      <td><small style="text-color:red;">${account_warning}</small></td>
                   </tr>
                   
                   <tr>

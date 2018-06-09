@@ -1,6 +1,6 @@
 package cn.ihsuzi.bean;
 
-public class PasswordInfomation
+public class PasswordInformation
 {
     /*
         pwi_id int not null auto_increment primary key,
@@ -19,18 +19,18 @@ public class PasswordInfomation
 	private int pw_id;
 	private int version;
 	private int type;
-	private String description;
-	private String content_one;
-	private String content_two;
-	private String content_three;
+	private String description;  // 标签
+	private String content_one;  // 账号
+	private String content_two;  // 密码
+	private String content_three;  // 暂时为空 2018-06-09
 	private String title;
 	
-	public PasswordInfomation()
+	public PasswordInformation()
 	{
 		super();
 	}
 
-	public PasswordInfomation(int pw_id, int version, int type,
+	public PasswordInformation(int pw_id, int version, int type,
 			String description, String content_one, String content_two,
 			String content_three, String title)
 	{
@@ -45,7 +45,7 @@ public class PasswordInfomation
 		this.title = title;
 	}
 
-	public PasswordInfomation(int pwi_id, int pw_id, int version, int type,
+	public PasswordInformation(int pwi_id, int pw_id, int version, int type,
 			String description, String content_one, String content_two,
 			String content_three, String title)
 	{

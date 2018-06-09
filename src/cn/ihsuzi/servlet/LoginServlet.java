@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet
 			{
 				// 校验正确，设置 sesseion，跳转到主页
 				request.getSession().setAttribute("username", user.getUsername());
-				response.sendRedirect(request.getContextPath()+"/private");
+				response.sendRedirect(request.getContextPath());
 				return;
 			}else {
 				// 校验失败，提示用户名或密码错误

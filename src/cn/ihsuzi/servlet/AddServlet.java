@@ -1,13 +1,15 @@
 package cn.ihsuzi.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.ihsuzi.bean.PasswordInformation;
+import cn.ihsuzi.dao.PasswordDao;
+import cn.ihsuzi.dao.PasswordInformationDao;
 import cn.ihsuzi.dao.UserDao;
 import cn.ihsuzi.util.StringUtil;
 
@@ -45,13 +47,15 @@ public class AddServlet extends HttpServlet
 				return;
 			}
 			
+		}else {
+			// TODO 判断标题是否已经使用了
 		}
-		String description = request.getParameter("description");
-		if (description == null || StringUtil.isEmpty(description))
+		String account = request.getParameter("account");
+		if (account == null || StringUtil.isEmpty(account))
 		{
 			try
 			{
-				request.setAttribute("description_warning", "简介不能为空");
+				request.setAttribute("account_warning", "账号不能为空");
 				request.getRequestDispatcher("/add").forward(request, response);
 				return;
 			} catch (Exception e)
@@ -83,13 +87,28 @@ public class AddServlet extends HttpServlet
         try
 		{
 			user_id = UserDao.getUserId(username);
+			int pw_id = PasswordDao.insert(user_id);
+			if (pw_id != 0)
+			{
+				PasswordInformation pwinfo = new PasswordInformation();
+				pwinfo.setTitle(title);
+				pwinfo.setPw_id(pw_id);
+				pwinfo.setContent_one(account);
+				pwinfo.setContent_two(content);
+				PasswordInformationDao.insert(pwinfo);
+			}else {
+				// TODO 报错
+			}
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-        System.out.println("userid:"+user_id);
         
-        // TODO 将添加的密码信息保存到数据库中
+        // TODO 提示用户添加成功，并跳转回主页
+//        response.getWriter().write("添加成功");
+        response.sendRedirect(request.getContextPath());
+        
+        
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
