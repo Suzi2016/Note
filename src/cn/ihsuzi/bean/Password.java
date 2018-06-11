@@ -23,7 +23,7 @@ public class Password
 	private int pw_isshow;
 	private int pw_isdelete;  //是否被删除，用作回收站功能
 	private int pw_degree;    //笔记的等级，用于表示重要性
-	
+
 	public Password()
 	{
 		super();

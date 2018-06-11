@@ -4,8 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
-import cn.ihsuzi.bean.Password;
+import cn.ihsuzi.bean.PasswordSet;
 import cn.ihsuzi.util.TestUtil;
 
 public class PasswordDao
@@ -43,6 +45,54 @@ public class PasswordDao
 		return pw_id;
 	}
 	
+	public static List<PasswordSet> getPasswordSets(int user_id) throws SQLException, Exception
+	{
+		String sql = "select b.pw_id,b.pwi_id,a.pw_createtime as create_time,a.pw_updatetime update_time,b.content_one as account,b.content_two as password,b.title from password as a,passwordinformation as b where a.user_id=1 and a.pw_isshow=%d and a.version=b.version and a.pw_id=b.pw_id;";
+		String selectSql = String.format(sql, user_id);
+		
+		ResultSet set = DBUtil.creatInstance().getStatement().executeQuery(selectSql);
+		if (!set.next())
+		{
+			return null;
+		}
+
+		List<PasswordSet> pwList = new ArrayList<PasswordSet>();
+		PasswordSet setObj;
+		do
+		{
+			setObj = new PasswordSet();
+			setObj.setPw_id(set.getInt("pw_id"));
+			setObj.setPwi_id(set.getInt("pwi_id"));
+			setObj.setCreate_time(set.getString("create_time"));
+			setObj.setUpdate_time(set.getString("update_time"));
+			setObj.setTitle(set.getString("title"));
+			setObj.setAccount(set.getString("account"));
+			setObj.setPassword(set.getString("password"));
+			pwList.add(setObj);
+		} while (set.next());
+		
+		DBUtil.close();
+		
+		return pwList;
+	}
+	
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
