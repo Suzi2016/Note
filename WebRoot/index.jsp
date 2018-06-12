@@ -21,6 +21,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 
 	<link rel="stylesheet" type="text/css" href="css/index.css">
+	
+	<script>
+		function deleteNote(pw_id,obj)
+		{
+		  var xmlhttp;
+		  if (window.XMLHttpRequest)
+		  {
+		    // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+		    xmlhttp=new XMLHttpRequest();
+		  }
+		  else
+		  {
+		    // IE6, IE5 浏览器执行代码
+		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		  xmlhttp.onreadystatechange=function()
+		  {
+		    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    {
+		        deleteTableRow(obj);
+		    }
+		  };
+		  xmlhttp.open("GET","/Note/deleteServlet?pw_id="+pw_id,true);
+		  xmlhttp.send();
+		}
+		
+		
+		function deleteTableRow(obj)
+		{
+		    var tr = obj.parentNode.parentNode;
+		    var table = tr.parentNode;
+		    table.removeChild(tr);
+		    if (table.rows.length == 1)
+		    {
+		        location.reload();
+		    }
+		}
+	</script>
 
   </head>
   
@@ -98,8 +136,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					      out.write("<td>"+list.get(i).getCreate_time()+"</td>");
 					      out.write("<td>"+list.get(i).getUpdate_time()+"</td>");
 					      out.write("<td>");
-					      out.write("<a href='javascript:if(confirm('确实要删除吗?'))location='"+request.getContextPath()+"/login''>删除</a>");
-					      out.write("");
+					      String button = "<button onclick='{if(confirm(\"确定要删除吗?\")) {deleteNote("+list.get(i).getPw_id()+",this); }else {}}'>删除</button>";
+					      out.write(button);
+					      out.write("</td>");
+   					      out.write("<td>");
+					      button = "<button onclick=\"window.open('./update','_self')\">修改</button>";
+					      out.write(button);
 					      out.write("</td>");
 					      out.write("</tr>");
 					  }		              
@@ -110,39 +152,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		          }  
 		          
 	          %>
-	          <c:if test="${hasDate==false}">
-	              <
-	          </c:if>
-	          <c:if test="${hasData==true}">
-	              <table>
-	                  <tr>
-	                      <th>标题</th>
-	                      <th>账号</th>
-	                      <th>密码</th>
-	                      <th>创建时间</th>
-	                      <th>更新时间</th>
-	                      
-	                  </tr>
-	                  <tr>
-	                      <td><%=list.get(0).getTitle()%></td>
-	                      <td><%=list.get(0).getAccount()%></td>
-	                      <td><%=list.get(0).getPassword()%></td>
-	                      <td><%=list.get(0).getCreate_time()%></td>
-	                      <td><%=list.get(0).getUpdate_time()%></td>
-	                      <td>
-	                          <a href="javascript:if(confirm('确实要删除吗?'))location='${pageContext.request.contextPath}/login'">删除</a>
-	                          <a href="javascript:if(confirm('确实要修改吗?'))location='${pageContext.request.contextPath}/login'">删除</a>
-                          </td>
-	                  </tr>
-	              </table>
-	          </c:if>
-	          
-	          
+          
 	        </div>
 	        <!-- add button -->
 	        <div class="add">
 	          <button class="button" onclick="window.open('./add','_self')">ADD</button>
-	          
 	        </div>
 	      </div>
 	      
