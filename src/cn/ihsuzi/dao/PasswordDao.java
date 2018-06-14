@@ -47,7 +47,7 @@ public class PasswordDao
 	
 	public static List<PasswordSet> getPasswordSets(int user_id) throws SQLException, Exception
 	{
-		String sql = "select b.pw_id,b.pwi_id,a.pw_createtime as create_time,a.pw_updatetime update_time,b.content_one as account,b.content_two as password,b.title from password as a,passwordinformation as b where a.user_id=1 and a.pw_isshow=%d and a.version=b.version and a.pw_id=b.pw_id;";
+		String sql = "select b.pw_id,b.pwi_id,a.pw_createtime as create_time,a.pw_updatetime update_time,b.content_one as account,b.content_two as password,b.title from password as a,passwordInformation as b where a.user_id=%d and a.pw_isshow=1 and a.version=b.version and a.pw_id=b.pw_id;";
 		String selectSql = String.format(sql, user_id);
 		
 		ResultSet set = DBUtil.creatInstance().getStatement().executeQuery(selectSql);
@@ -87,6 +87,93 @@ public class PasswordDao
 		String sql = String.format("update password set pw_isshow=%d where pw_id=%d", showValue,pw_id);
 		DBUtil.creatInstance().getStatement().executeUpdate(sql);
 		DBUtil.close();
+	}
+	
+	
+	public static boolean isMatch(int pw_id,int pwi_id,String title,String account,String password) throws SQLException, Exception
+	{
+		// !!!重要，在换行写 String 时一定要注意空格!!!
+		String format = "select a.user_id "
+				+ "from password as a,passwordInformation as b "
+				+ "where a.pw_id=%d "
+				+ "and b.pw_id=%d "
+				+ "and b.pwi_id=%d "
+				+ "and b.title='%s' "
+				+ "and b.content_one='%s' "
+				+ "and b.content_two='%s';";		
+		String sql = String.format(format, pw_id,pw_id,pwi_id,title,account,password);
+		System.out.println(sql);
+		
+		// 执行 sql 语句
+		ResultSet set = (ResultSet) DBUtil.creatInstance().getStatement().executeQuery(sql);
+		
+		// 拿到 user_id
+		if (set.next())
+		{
+			return true;
+		}
+		
+		// 关闭数据库
+		DBUtil.close();
+		
+		return false;
+	}
+	
+	public static int getUserId(int pw_id,int pwi_id) throws Exception
+	{
+		String format = "select a.user_id "
+				+ "from password as a,passwordInformation as b "
+				+ "where a.pw_id=%d "
+				+ "and b.pw_id=%d "
+				+ "and b.pwi_id=%d;";
+		String sql = String.format(format, pw_id,pw_id,pwi_id);
+		System.out.println("sql:"+sql);
+		
+		// 执行 sql 语句
+		ResultSet set = (ResultSet) DBUtil.creatInstance().getStatement().executeQuery(sql);
+		
+		int user_id = -1;
+		
+		// 拿到 user_id
+		if (set.next())
+		{
+			user_id = set.getInt(set.getRow());
+		}
+		
+		// 关闭数据库
+		DBUtil.close();
+		
+		return user_id;
+	}
+	
+	/**
+	 * 
+	 * @param pw_id
+	 * @return 修改后的 version
+	 * @throws Exception
+	 */
+	public static int updateVersionAndUpdateTime(int pw_id) throws Exception
+	{
+		// 拿到当前时间
+		String time = new Timestamp(System.currentTimeMillis()).toString();
+		String format = "update password set version=version+1,pw_updatetime='%s' where pw_id=%d;";
+		String sql = String.format(format, time,pw_id);
+		
+		Statement statement = DBUtil.creatInstance().getStatement();
+		statement.executeUpdate(sql);
+		
+		// 拿到 pw_id
+		String selectVersionSql = "select version from password where pw_id="+pw_id+";";
+		ResultSet set = (ResultSet) statement.executeQuery(selectVersionSql);
+		
+		int version = 0;
+		if (set.next())
+		{
+			version = set.getInt(set.getRow());
+		}
+		DBUtil.close();
+		
+		return version;
 	}
 	
 }

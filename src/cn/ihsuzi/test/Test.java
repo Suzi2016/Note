@@ -16,7 +16,11 @@ public class Test
 //		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //		System.out.println(timestamp.toString());
 		
-		testDBGetPasswordSet();
+//		testDBGetPasswordSet();
+		
+//		System.out.println(PasswordDao.getUserId(14, 7));
+//		System.out.println(!PasswordDao.isMatch(14, 7, "Note1", "Suzi", "szw123"));
+		System.out.println(PasswordDao.updateVersionAndUpdateTime(14));
 	}
 	
 	private static void testDBGetPasswordSet() throws SQLException, Exception
@@ -28,5 +32,7 @@ public class Test
 			System.out.println(list.get(i).toString());
 		}
 	}
+	
+	
 
 }

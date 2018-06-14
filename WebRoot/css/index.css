@@ -113,5 +113,10 @@ footer{
 	width: 25%;
 }
 
+small {
+	margin-top:10px;
+	margin-left: 2%;
+	font-size: 12px;
+}
 
 

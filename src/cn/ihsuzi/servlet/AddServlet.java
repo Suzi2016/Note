@@ -96,6 +96,7 @@ public class AddServlet extends HttpServlet
 				pwinfo.setPw_id(pw_id);
 				pwinfo.setContent_one(account);
 				pwinfo.setContent_two(content);
+				pwinfo.setVersion(1);
 				PasswordInformationDao.insert(pwinfo);
 			}else {
 				// TODO 报错
