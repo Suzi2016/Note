@@ -31,6 +31,7 @@ public class AddServlet extends HttpServlet
 		}
 
 		// 拿到从 add.jsp 提交上来的数据，并作简单校验
+		// TODO 对特殊字符进行转义，比如 ' " 等符号在存储的时侯不进行转义会出错
 		String title = request.getParameter("title");
 		if (title == null || StringUtil.isEmpty(title))
 		{
@@ -105,7 +106,7 @@ public class AddServlet extends HttpServlet
 		}
         
         // TODO 提示用户添加成功，并跳转回主页
-//        response.getWriter().write("添加成功");
+//        response.getWriter().write( "添加成功");
         response.sendRedirect(request.getContextPath());
         
         

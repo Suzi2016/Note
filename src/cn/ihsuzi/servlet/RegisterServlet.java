@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.ihsuzi.bean.User;
 import cn.ihsuzi.dao.UserDao;
+import cn.ihsuzi.util.StringUtil;
 
 public class RegisterServlet extends HttpServlet
 {
-
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
@@ -21,62 +21,118 @@ public class RegisterServlet extends HttpServlet
 		// 解决乱码问题
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/heml;charset=UTF-8");
-		
-		//TODO 做一个空值验证以及错误处理
 
-		// 获取从浏览器传过来的注册信息
+		// 获取从浏览器传过来的注册信息 并进行错误校验
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-
-		// Test 解决数据库存储乱码的问题，打印从浏览器获取的用户名和密码，查看是否是乱码
-		System.out.println("username:"+username);
-		System.out.println("password:"+password);
-
-
-		boolean isValid = true;
-		
-		// 判断信息是否已经注册了
-		if (username == "" || username.isEmpty() || password == "" || password.isEmpty())
+		if (username == null || StringUtil.isEmpty(username))
 		{
-			isValid = false;
+			try
+			{
+				request.setAttribute("username_warning", "昵称不能为空");
+				request.getRequestDispatcher("/register").forward(request,
+						response);
+				return;
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
+		}
+		String password = request.getParameter("password");
+		if (password == null || StringUtil.isEmpty(password))
+		{
+			try
+			{
+				request.setAttribute("pass_warning", "密码不能为空");
+				request.getRequestDispatcher("/register").forward(request,
+						response);
+				return;
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
+		}
+		String repassword = request.getParameter("repassword");
+		if (repassword == null || StringUtil.isEmpty(repassword))
+		{
+			try
+			{
+				request.setAttribute("repass_warning", "请确认密码");
+				request.getRequestDispatcher("/register").forward(request,
+						response);
+				return;
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
+		}
+
+		// 判断两次密码是否相同
+		if (!repassword.equals(password))
+		{
+			try
+			{
+				request.setAttribute("repass_warning", "两次输入的密码不一样");
+				request.getRequestDispatcher("/register").forward(request,
+						response);
+				return;
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
+		}
+
+		// 校验验证码
+		String valistr = request.getParameter("valistr");
+		String valistr2 = (String) request.getSession().getAttribute("valistr");
+		if (valistr == null || valistr2 == null || !valistr.equals(valistr2))
+		{
+			System.out.println("RegisterServlet:验证码不对");
+			request.setAttribute("vali_warning", "验证码不对");
+			request.getRequestDispatcher("/register")
+					.forward(request, response);
+			return;
 		}
 		
+		// 判断信息是否已经注册了
 		// 如果注册了就提示用户已经注册
 		// 没有注册就进行注册，并提示注册成功，跳转到登录界面
 		PrintWriter out = response.getWriter();
-		if (isValid)
+
+		User user = new User(username, password, "no_email");
+		try
 		{
-			User user = new User(username, password,"no_email");
-			// 将注册用户信息存储到数据库中
-			try
+			// 判断用户名是否已经注册了
+			if (UserDao.isUsernameExist(user))
 			{
-				// 判断用户名是否已经注册了
-				if (UserDao.isUsernameExist(user))
-				{
-					out.write("用户名已被注册，请重试");
-					response.setHeader("refresh", "2;url=./register.jsp");
-				}else {
-					UserDao.insertUser(user);
-					out.write("注册成功，3秒后跳转到登录界面");
-					response.setHeader("refresh", "3;url=./login.jsp");
-				}
-			} catch (Exception e)
+				request.setAttribute("username_warning", "昵称已经被使用了");
+				request.getRequestDispatcher("/register").forward(request,
+						response);
+				return;
+			} else
 			{
-				out.write("注册失败，请重试");
-				response.setHeader("refresh", "2;url=./register.jsp");
-				e.printStackTrace();
+				UserDao.insertUser(user);
+				out.write("注册成功，3秒后跳转到登录界面");
+				response.setHeader("refresh", "2;url=./login");
 			}
-			
-		}else {
-			out.write("用户名或密码不能为空");
-			response.setHeader("refresh", "2;url=./register.jsp");
+		} catch (Exception e)
+		{
+			// TODO 此处可以跳转到错误页面 500
+			out.write("发生了未知错误");
+			response.setHeader("refresh", "2;url=./register");
 		}
-		
+
 		out.flush();
 		out.close();
-			
-	}
 
+	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
@@ -85,12 +141,6 @@ public class RegisterServlet extends HttpServlet
 	}
 
 }
-
-
-
-
-
-
 
 
 

@@ -77,6 +77,17 @@ public class PasswordDao
 	}
 	
 	
+	public static void setPasswordIsShow(int pw_id,boolean isShow) throws SQLException, Exception
+	{
+		int showValue = 0;
+		if (isShow)
+		{
+			showValue = 1;
+		}
+		String sql = String.format("update password set pw_isshow=%d where pw_id=%d", showValue,pw_id);
+		DBUtil.creatInstance().getStatement().executeUpdate(sql);
+		DBUtil.close();
+	}
 	
 }
 

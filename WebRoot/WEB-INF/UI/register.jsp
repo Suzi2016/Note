@@ -1,6 +1,4 @@
-<%@page import="cn.ihsuzi.util.ServiceUtil"%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,26 +7,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html>
   <head>
-    <base href="<%=basePath%>">
-    
-    <title>Note|添加一条记录</title>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
+	<base href="<%=basePath%>">
+	
+	<title>注册</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+	<meta name="expires" content="-1">
+	<meta name="pragma" content="no-cache">
+	<meta name="cache-control" content="no-cache">  
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	
-    <style type="text/css">
+
+	<style type="text/css">
 	  html {
         background-color: #FFFAF0;
       }
-	  input {
+	 input {
 		border: 1px solid #ccc;
 		padding: 7px 0px;
 		border-radius: 3px;
@@ -126,64 +123,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</script>
 
   </head>
- 
-   <%
-        // 判断是否已经登录了，如果还没有登录了，就直接跳转到主页
-		if (!ServiceUtil.isLogin(request))
-		{
-			response.sendRedirect(request.getContextPath());
-		}
-   %>
   
   <body>
-      <div style="align:center;margin: 20px;">
-          <h3>添加一条记录</h3>
-          <form action="${pageContext.request.contextPath}/Add" method="GET">
-              <table>
-                  <tr>
-                      <td>标题</td>
-                      <td>
-                          <input type="text" name="title" required="required"/>
-                      </td>
-                      <td><small style="color:#FF0000;">${title_warning}</small></td>
-                  </tr>
-                  
-                  <tr>
-                      <td>账号</td>
-                      <td>
-                          <input type="text" name="account" required="required"/>
-                      </td>
-                      <td><small style="color:#FF0000;">${account_warning}</small></td>
-                  </tr>
-                  
-                  <tr>
-                      <td>密码</td>
-                      <td>
-                          <input type="text" name="content" required="required"/>
-                      </td>
-                      <td><small style="color:#FF0000;">${content_warning}</small></td>
-                  </tr>
-                  
-                  <tr>
-                      <td colspan="2">
-                          <input type="submit" value="添加"/>
-                      </td>
-                  </tr>
-              </table>
-          </form>
-      </div>
+    <br/><br/><br/>
+    <h3>欢迎加入Note</h3>
+    <small>>>>>已有账号，直接去&nbsp<a href="${pageContext.request.contextPath}/login">登录</a></small>
+    <hr>
+	<form action="${pageContext.request.contextPath}/Register" method="post" id="formid" >
+	  <table>
+	      <tr>
+	        <td>昵&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp称</td>
+	        <td><input type="text" name="username" id="userid"></td>
+	        <td><small style="color:#FF0000;">${username_warning}</small></td>
+	      </tr>
+	      <tr>
+	        <td>密&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp码</td>
+	        <td><input type="password" name="password" id="passid"></td>
+	        <td><small style="color:#FF0000;">${pass_warning}</small></td>	      
+	      </tr>
+	      <tr>
+	        <td>确认密码</td>
+	        <td><input type="password" name="repassword" id="repassid"></td>
+	        <td><small style="color:#FF0000;">${repass_warning}</small></td>	      
+	      </tr>
+	      <tr>
+	        <td>验&nbsp&nbsp证&nbsp&nbsp码</td>
+	        <td><input type="text" name="valistr" id="validateid"></td>
+	        <td><img src="./ValidateImg" style="cursor:pointer;" onclick="changeImg(this)" /></td>	      
+	        <td><small style="color:#FF0000;">${vali_warning}</small></td>
+	      </tr>
+	  </table>
+	</form>
+	<button id="registerbutton" type="button" value="" onclick = "checkData();">注册</button>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

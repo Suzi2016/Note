@@ -1,3 +1,4 @@
+<%@page import="cn.ihsuzi.util.ServiceUtil"%>
 <%@page import="cn.ihsuzi.dao.PasswordDao"%>
 <%@page import="cn.ihsuzi.bean.PasswordSet"%>
 <%@page import="cn.ihsuzi.dao.UserDao"%>
@@ -12,8 +13,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    
     <title>Note</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -64,20 +66,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     
+    <%
+        // 如果是手机端访问就直接跳转到登录页面，此页面没有登录不适应手机屏幕，不会显示登录 注册 button
+        boolean isMobile = ServiceUtil.JudgeIsMoblie(request);
+        if (isMobile)
+        {
+            response.sendRedirect(request.getContextPath()+"/login");
+        } 
+    
+     %>
+    
     <c:if test="${sessionScope.username == null }">
-        <div style="background-color: #E0FFFF;height: 90px">
-           <h2 style="padding-top: 24px;text-align:center;">Note</h2>
-        </div>
-       
-        <div style="background-color: #76EE00;height: 90px">
-	      <div onclick="window.open('./login','_self')" style="background-color: #76EE00;height: 90px">
-	           <h2 style="padding-top: 20px;text-align:center;">登录</h2>
+	    <div class="main">	
+	    	    
+   	      <!-- head part:show the website info & private info,exit button -->
+	      <div class="head">
+	        <div class="headLeft">
+	          Note
+	        </div>
+	        <div class="headRight">
+	          <a class="link" href="${pageContext.request.contextPath}/login">登录</a>
+	          &nbsp|
+	          <a class="link" href="${pageContext.request.contextPath}/register" target="">注册</a>
+	        </div>
 	      </div>
-	      <div onclick="window.open('./register.jsp','_self')" style="background-color: #76EE00;height: 90px">
-	           <h2 style="padding-top: 20px;text-align:center;">注册</h2>
-	      </div>	      
-
-	    </div>
+		    
+		</div>
     </c:if>
     
     <c:if test="${sessionScope.username != null }">
@@ -117,59 +131,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	              // 判断是否有数据
 		          if(hasData)
 		          {
-		              out.write("<table align=center border=1>");
+		              out.write("<center>");
+		              out.write("<table class=\"table\" cellspacing=\"0\" rules=\"all\" bordercolor=\"#CCCCCC\" border=\"1\">");
 		              out.write("<tr>");
-		              out.write("<th>标题</th>");
+		              out.write("<th class=\"th\">标题</th>");
 		              out.write("<th>账号</th>");
 		              out.write("<th>密码</th>");
-		              out.write("<th>创建时间</th>");
-		              out.write("<th>更新时间</th>");
+		              //out.write("<th>创建时间</th>");
+		              //out.write("<th>更新时间</th>");
 		              out.write("<th>操作</th>");
 		              out.write("</tr>");
 		              
 					  for (int i = 0;i<list.size();i++)
 					  {
 					      out.write("<tr>");
-					      out.write("<td>"+list.get(i).getTitle()+"</td>");
-					      out.write("<td>"+list.get(i).getAccount()+"</td>");
-					      out.write("<td>"+list.get(i).getPassword()+"</td>");
-					      out.write("<td>"+list.get(i).getCreate_time()+"</td>");
-					      out.write("<td>"+list.get(i).getUpdate_time()+"</td>");
-					      out.write("<td>");
-					      String button = "<button onclick='{if(confirm(\"确定要删除吗?\")) {deleteNote("+list.get(i).getPw_id()+",this); }else {}}'>删除</button>";
+					      out.write("<td class=\"td\">"+list.get(i).getTitle()+"</td>");
+					      out.write("<td class=\"td\">"+list.get(i).getAccount()+"</td>");
+					      out.write("<td class=\"td\">"+list.get(i).getPassword()+"</td>");
+					      //out.write("<td class=\"td\">"+list.get(i).getCreate_time()+"</td>");
+					      //out.write("<td class=\"td\">"+list.get(i).getUpdate_time()+"</td>");
+					      out.write("<td class=\"td\">");
+					      String button = "<button class=\"button delete\" onclick='{if(confirm(\"确定要删除吗?\")) {deleteNote("+list.get(i).getPw_id()+",this); }else {}}'>删除</button>";
 					      out.write(button);
-					      out.write("</td>");
-   					      out.write("<td>");
-					      button = "<button onclick=\"window.open('./update','_self')\">修改</button>";
+						  out.write("&nbsp&nbsp");
+					      button = "<button class=\"button update\" onclick=\"window.open('./update','_self')\">修改</button>";
 					      out.write(button);
 					      out.write("</td>");
 					      out.write("</tr>");
 					  }		              
 		              
 		              out.write("</table>");
+		              out.write("</center>");
 		          }else {
 		              out.write("<p style='text-align: center;margin: 20px;'>还没有数据~~去添加吧&nbsp&#8595</p>");
 		          }  
-		          
 	          %>
           
 	        </div>
 	        <!-- add button -->
+	        <br/><br/>
 	        <div class="add">
-	          <button class="button" onclick="window.open('./add','_self')">ADD</button>
+	          <button class="button" onclick="window.open('./add','_self')">新建</button>
 	        </div>
 	      </div>
 	      
 	      <!-- footer part:show some website info -->
 	      <br/>
-	      <div class="footer">
-	       &copy; 2018
-	       <a class="link" href="http://ihsuzi.cn/" target="_blank">云中崖</a>
-	      </div>
+
 	    </div>
     
     </c:if>
 
+    <footer class="footer22">
+        &copy; 2018
+        <strong>
+          <a class="link" href="http://ihsuzi.cn/" target="_blank">云中崖</a>
+        </strong>
+    </footer>
   </body>
 </html>
 
