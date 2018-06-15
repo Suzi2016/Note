@@ -19,11 +19,12 @@ public class RegisterServlet extends HttpServlet
 			throws ServletException, IOException
 	{
 		// 解决乱码问题
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/heml;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8;");
 
 		// 获取从浏览器传过来的注册信息 并进行错误校验
 		String username = request.getParameter("username");
+		System.out.println("RegisterServlet:username--"+username);
 		if (username == null || StringUtil.isEmpty(username))
 		{
 			try
@@ -119,7 +120,7 @@ public class RegisterServlet extends HttpServlet
 			} else
 			{
 				UserDao.insertUser(user);
-				out.write("注册成功，3秒后跳转到登录界面");
+				out.write("注册成功，马上跳转到登录界面");
 				response.setHeader("refresh", "2;url=./login");
 			}
 		} catch (Exception e)

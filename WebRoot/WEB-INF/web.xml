@@ -75,6 +75,13 @@
     <servlet-name>UpdateServlet</servlet-name>
     <servlet-class>cn.ihsuzi.servlet.UpdateServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>UserInfoServlet</servlet-name>
+    <servlet-class>cn.ihsuzi.servlet.ui.UserInfoServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -137,6 +144,10 @@
   <servlet-mapping>
     <servlet-name>UpdateServlet</servlet-name>
     <url-pattern>/updateServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserInfoServlet</servlet-name>
+    <url-pattern>/i</url-pattern>
   </servlet-mapping>
 
 </web-app>

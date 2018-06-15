@@ -15,6 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">
 <title>Note</title>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
 <meta http-equiv="pragma" content="no-cache">
@@ -53,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	}
 
-	function update(element,oldTitle,oldAccount,oldPassword,pw_id, pwi_id) {
+	function update(element, oldTitle, oldAccount, oldPassword, pw_id, pwi_id) {
 		// 获取修改后的值
 		var tr = element.parentNode.parentNode;
 
@@ -63,25 +64,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var title = titleTag.innerHTML;
 		var account = accountTag.innerHTML;
 		var password = passwordTag.innerHTML;
-		
-		console.log("oldTitle:",oldTitle);
-		console.log("newTitle:",title);
+
+		console.log("oldTitle:", oldTitle);
+		console.log("newTitle:", title);
 		// 判断是否进行了修改
 		var isUpdate = false;
-		if(title != oldTitle)
-		{
-		    isUpdate = true;
-		}else if(account != oldAccount){
-		    isUpdate = true;
-		}else if(password != oldPassword){
-		    isUpdate = true;
+		if (title != oldTitle) {
+			isUpdate = true;
+		} else if (account != oldAccount) {
+			isUpdate = true;
+		} else if (password != oldPassword) {
+			isUpdate = true;
 		}
-		
-		if(!isUpdate)
-		{
-		    alert("还没有进行修改哦~\n双击要修改的内容进行修改");
-		}else{
-    		var xmlhttp;
+
+		if (!isUpdate) {
+			alert("信息还没有改动哦~\n双击要修改的内容进行编辑");
+		} else {
+			var xmlhttp;
 			if (window.XMLHttpRequest) {
 				// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
 				xmlhttp = new XMLHttpRequest();
@@ -94,10 +93,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					alert("修改成功");
 				}
 			};
-			xmlhttp.open("GET", "/Note/updateServlet?pw_id=" + pw_id + "&pwi_id=" + pwi_id + "&title=" + title + "&account=" + account + "&password=" + password, true);
+			xmlhttp.open("GET", "/Note/updateServlet?pw_id=" + pw_id
+					+ "&pwi_id=" + pwi_id + "&title=" + title + "&account="
+					+ account + "&password=" + password, true);
 			xmlhttp.send();
 		}
-		
+
 	}
 
 	function ShowElement(element) {
@@ -112,11 +113,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		newobj.onblur = function() {
 			//当触发时判断新增元素值是否为空，为空则不修改，并返回原有值 
 			element.innerHTML = this.value == oldhtml ? oldhtml : this.value;
-			if(this.value == "")
-			{
-			    element.innerHTML = oldhtml;
+			if (this.value == "") {
+				element.innerHTML = oldhtml;
 			}
-			
+
 			//当触发时设置父节点的双击事件为ShowElement
 			element.setAttribute("ondblclick", "ShowElement(this);");
 		}
@@ -133,7 +133,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		newobj.parentNode.setAttribute("ondblclick", "");
 
 	}
-	
 </script>
 
 </head>
@@ -215,11 +214,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								for (int i = 0; i < list.size(); i++)
 								{
 									out.write("<tr>");
-									out.write("<td class=\"td\" ondblclick=\"ShowElement(this);\">" + list.get(i).getTitle()
-											+ "</td>");
-									out.write("<td class=\"td\">"
+									out.write("<td class=\"td\" ondblclick=\"ShowElement(this);\">"
+											+ list.get(i).getTitle() + "</td>");
+									out.write("<td class=\"td\" ondblclick=\"ShowElement(this);\">"
 											+ list.get(i).getAccount() + "</td>");
-									out.write("<td class=\"td\">"
+									out.write("<td class=\"td\" ondblclick=\"ShowElement(this);\">"
 											+ list.get(i).getPassword() + "</td>");
 									//out.write("<td class=\"td\">"+list.get(i).getCreate_time()+"</td>");
 									//out.write("<td class=\"td\">"+list.get(i).getUpdate_time()+"</td>");
@@ -229,18 +228,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											+ ",this); }else {}}'>删除</button>";
 									out.write(button);
 									out.write("&nbsp&nbsp");
-									button = "<button class=\"button update\" onclick=\"update(this,'"+list.get(i).getTitle()+"','"+list.get(i).getAccount()+"','"+list.get(i).getPassword()+"',"+list.get(i).getPw_id()+","+list.get(i).getPwi_id()+");\">修改</button>";
+									button = "<button class=\"button update\" onclick=\"update(this,'"
+											+ list.get(i).getTitle()
+											+ "','"
+											+ list.get(i).getAccount()
+											+ "','"
+											+ list.get(i).getPassword()
+											+ "',"
+											+ list.get(i).getPw_id()
+											+ ","
+											+ list.get(i).getPwi_id() + ");\">修改</button>";
 									out.write(button);
 									out.write("</td>");
 									out.write("</tr>");
 
 									list.get(i).getPw_id();
 								}
-                                
+
 								out.write("</table>");
 								out.write("</center>");
 								out.write("<br />");
-								out.write("<small>提示：双击表格内容进行编辑，点击修改进行确认</small>");
+								out.write("<small>提示：双击表格内容进行编辑，再点击修改进行确认</small>");
 							} else
 							{
 								out.write("<p style='text-align: center;margin: 20px;'>还没有数据~~去添加吧&nbsp&#8595</p>");

@@ -19,7 +19,7 @@ public class AddServlet extends HttpServlet
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8;");
 		
 		// 判断是否已经登录，如果没有登录直接访问，则重定向到主页
@@ -33,6 +33,7 @@ public class AddServlet extends HttpServlet
 		// 拿到从 add.jsp 提交上来的数据，并作简单校验
 		// TODO 对特殊字符进行转义，比如 ' " 等符号在存储的时侯不进行转义会出错
 		String title = request.getParameter("title");
+		System.out.println(title);
 		if (title == null || StringUtil.isEmpty(title))
 		{
 			// 如果浏览器长时间没操作再次直接刷新可能会报错：cant forword after response is commited

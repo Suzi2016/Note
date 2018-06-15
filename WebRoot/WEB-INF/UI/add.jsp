@@ -1,5 +1,5 @@
 <%@page import="cn.ihsuzi.util.ServiceUtil"%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String path = request.getContextPath();
@@ -16,6 +16,7 @@
 <title>Note|添加一条记录</title>
 
 <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
 <meta http-equiv="pragma" content="no-cache">
@@ -179,7 +180,6 @@ a {
 					id="passid" /></td>
 				<td><small style="color:#FF0000;">${content_warning}</small></td>
 			</tr>
-
 		</table>
 	</form>
 	<button id="addbutton" type="button" value="" onclick="checkData();">新建</button>

@@ -19,8 +19,8 @@ public class LoginServlet extends HttpServlet
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException
 	{
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;charset=utf-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8;");
 		
 		// 判断是否已经登录了，如果登录了，就直接跳转到主页
 		if (ServiceUtil.isLogin(request))
@@ -30,6 +30,8 @@ public class LoginServlet extends HttpServlet
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		
+		System.out.println("LoginServlet:username--"+username);
 		
 		// 判断得到的 username 和 password 是否为空
 		if (username==null || StringUtil.isEmpty(username))
